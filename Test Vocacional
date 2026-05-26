@@ -1,0 +1,1172 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Test Vocacional PIE — ¿Qué sigue después del liceo?</title>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@700;800&family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+/* ════════════════════════════════════════
+   BASE
+════════════════════════════════════════ */
+:root {
+  --bg:#0a0a10; --surface:#16161e; --surface2:#1f1f29;
+  --border:#2a2a38; --text:#f0f0f5; --muted:#8080a0;
+  --accent:#7c5cfc; --accent2:#ff6b8a; --accent3:#43e97b; --accent4:#f9c846;
+  --radius:16px; --radius-sm:10px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg); color:var(--text);
+  font-family:'DM Sans',sans-serif; font-size:16px;
+  line-height:1.6; min-height:100vh; overflow-x:hidden;
+}
+.container{max-width:720px;margin:0 auto;padding:0 20px;position:relative;z-index:2}
+
+/* ════════════════════════════════════════
+   ANIMATED METALLIC PURPLE BACKGROUND
+════════════════════════════════════════ */
+.bg-wrap{
+  position:fixed;inset:0;z-index:0;
+  overflow:hidden;pointer-events:none;
+}
+
+/* Grid texture */
+.bg-grid{
+  position:absolute;inset:0;
+  background-image:radial-gradient(rgba(124,92,252,0.12) 1px,transparent 1px);
+  background-size:44px 44px;
+}
+
+/* Orbs */
+.orb{position:absolute;border-radius:50%;pointer-events:none;}
+
+.o1{
+  width:700px;height:700px;
+  background:radial-gradient(circle at 40% 40%,rgba(124,92,252,0.28),rgba(90,50,200,0.12) 50%,transparent 70%);
+  top:-200px;left:-200px;
+  filter:blur(60px);
+  animation:drift1 22s ease-in-out infinite alternate;
+}
+.o2{
+  width:600px;height:600px;
+  background:radial-gradient(circle at 60% 60%,rgba(180,80,255,0.2),rgba(100,40,180,0.1) 50%,transparent 70%);
+  bottom:-150px;right:-150px;
+  filter:blur(70px);
+  animation:drift2 28s ease-in-out infinite alternate;
+}
+.o3{
+  width:400px;height:400px;
+  background:radial-gradient(circle,rgba(108,99,255,0.22),transparent 65%);
+  top:30%;right:5%;
+  filter:blur(50px);
+  animation:drift3 18s ease-in-out infinite alternate;
+}
+.o4{
+  width:350px;height:350px;
+  background:radial-gradient(circle,rgba(200,100,255,0.15),transparent 65%);
+  top:55%;left:10%;
+  filter:blur(55px);
+  animation:drift4 24s ease-in-out infinite alternate;
+}
+.o5{
+  width:250px;height:250px;
+  background:radial-gradient(circle,rgba(150,80,255,0.18),transparent 65%);
+  top:20%;left:40%;
+  filter:blur(40px);
+  animation:drift5 15s ease-in-out infinite alternate;
+}
+
+/* Metallic shimmer */
+.shimmer{
+  position:absolute;inset:0;
+  background:linear-gradient(
+    108deg,
+    transparent 38%,
+    rgba(200,160,255,0.025) 44%,
+    rgba(255,255,255,0.04) 50%,
+    rgba(200,160,255,0.025) 56%,
+    transparent 62%
+  );
+  background-size:300% 300%;
+  animation:shimmer 10s ease-in-out infinite;
+}
+
+@keyframes drift1{
+  0%{transform:translate(0,0) scale(1)}
+  33%{transform:translate(180px,-100px) scale(1.12)}
+  66%{transform:translate(-80px,160px) scale(0.95)}
+  100%{transform:translate(60px,60px) scale(1.05)}
+}
+@keyframes drift2{
+  0%{transform:translate(0,0) scale(1)}
+  50%{transform:translate(-160px,-140px) scale(1.18)}
+  100%{transform:translate(40px,60px) scale(0.92)}
+}
+@keyframes drift3{
+  0%{transform:translate(0,0) scale(1)}
+  40%{transform:translate(-120px,80px) scale(1.1)}
+  100%{transform:translate(60px,-60px) scale(0.9)}
+}
+@keyframes drift4{
+  0%{transform:translate(0,0) scale(1)}
+  60%{transform:translate(100px,-80px) scale(1.15)}
+  100%{transform:translate(-40px,40px) scale(1)}
+}
+@keyframes drift5{
+  0%{transform:translate(0,0)}
+  100%{transform:translate(-80px,120px)}
+}
+@keyframes shimmer{
+  0%{background-position:200% 0}
+  50%{background-position:0% 100%}
+  100%{background-position:200% 0}
+}
+
+/* ════════════════════════════════════════
+   SITE BRAND WATERMARK
+════════════════════════════════════════ */
+.site-brand{
+  position:fixed;bottom:10px;left:0;right:0;
+  text-align:center;
+  font-size:11px;color:rgba(128,128,160,0.45);
+  letter-spacing:0.04em;
+  z-index:5;pointer-events:none;
+}
+.site-brand strong{color:rgba(160,140,220,0.6)}
+
+/* ════════════════════════════════════════
+   PROGRESS BAR
+════════════════════════════════════════ */
+#progress-bar-wrap{
+  display:none;position:sticky;top:0;z-index:100;
+  background:rgba(10,10,16,0.92);backdrop-filter:blur(12px);
+  padding:10px 0 8px;border-bottom:1px solid var(--border);
+}
+.progress-track{height:3px;background:var(--border);border-radius:99px;overflow:hidden}
+.progress-fill{
+  height:100%;border-radius:99px;
+  background:linear-gradient(90deg,var(--accent),var(--accent2));
+  transition:width .4s cubic-bezier(.4,0,.2,1);width:0%
+}
+.progress-label{font-size:11px;color:var(--muted);text-align:right;margin-top:5px}
+
+/* ════════════════════════════════════════
+   SCREENS
+════════════════════════════════════════ */
+.screen{display:none}
+.screen.active{display:block}
+
+/* ════════════════════════════════════════
+   SCREEN: INTRO
+════════════════════════════════════════ */
+#screen-intro{padding:60px 0 100px}
+.intro-eyebrow{
+  display:inline-block;font-size:11px;font-weight:600;
+  letter-spacing:.12em;text-transform:uppercase;color:var(--accent);
+  border:1px solid rgba(124,92,252,.5);border-radius:99px;
+  padding:4px 14px;margin-bottom:28px;
+  background:rgba(124,92,252,.08);
+}
+.intro-title{
+  font-family:'Syne',sans-serif;
+  font-size:clamp(2rem,6vw,3.4rem);
+  font-weight:800;line-height:1.08;margin-bottom:20px;
+  background:linear-gradient(135deg,#fff 30%,#c4a8ff 65%,var(--accent) 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+.intro-sub{font-size:17px;color:#b8b8d0;line-height:1.75;margin-bottom:40px;max-width:540px}
+.intro-tags{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:48px}
+.intro-tag{
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);
+  border-radius:99px;padding:6px 16px;font-size:13px;color:var(--muted);
+  backdrop-filter:blur(4px);
+}
+.intro-tag span{color:var(--text)}
+.disclaimer{
+  margin-top:20px;font-size:13px;color:var(--muted);
+  border-left:2px solid rgba(124,92,252,.3);padding-left:14px;line-height:1.55
+}
+
+/* ════════════════════════════════════════
+   BUTTONS
+════════════════════════════════════════ */
+.btn-primary{
+  display:inline-flex;align-items:center;gap:10px;
+  background:linear-gradient(135deg,#7c5cfc,#9b6fff);color:#fff;
+  font-family:'Syne',sans-serif;font-size:15px;font-weight:700;
+  padding:16px 38px;border-radius:var(--radius);border:none;
+  cursor:pointer;letter-spacing:.03em;
+  transition:transform .2s,box-shadow .2s;
+  box-shadow:0 4px 32px rgba(124,92,252,.4);
+}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 48px rgba(124,92,252,.6)}
+.btn-primary svg{transition:transform .2s}
+.btn-primary:hover svg{transform:translateX(4px)}
+
+.btn-submit{
+  display:inline-flex;align-items:center;gap:8px;
+  background:var(--accent3);color:#0f2018;
+  font-family:'Syne',sans-serif;font-size:14px;font-weight:700;
+  padding:13px 28px;border-radius:var(--radius-sm);border:none;
+  cursor:pointer;opacity:.35;pointer-events:none;
+  transition:opacity .3s,transform .2s,box-shadow .2s;
+}
+.btn-submit.enabled{opacity:1;pointer-events:all;box-shadow:0 4px 24px rgba(67,233,123,.3)}
+.btn-submit.enabled:hover{transform:translateY(-2px)}
+
+.btn-secondary{
+  display:inline-flex;align-items:center;gap:8px;
+  background:var(--surface2);color:var(--muted);
+  font-family:'Syne',sans-serif;font-size:13px;font-weight:600;
+  padding:12px 22px;border-radius:var(--radius-sm);border:1px solid var(--border);
+  cursor:pointer;transition:all .2s;
+}
+.btn-secondary:hover{color:var(--text);border-color:#3a3a50}
+
+.btn-print{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(249,200,70,.08);color:var(--accent4);
+  font-family:'Syne',sans-serif;font-size:14px;font-weight:700;
+  padding:13px 26px;border-radius:var(--radius-sm);
+  border:1.5px solid rgba(249,200,70,.4);
+  cursor:pointer;transition:all .2s;
+}
+.btn-print:hover{background:rgba(249,200,70,.14)}
+
+/* ════════════════════════════════════════
+   SCREEN: DATOS
+════════════════════════════════════════ */
+#screen-datos{padding:40px 0 100px}
+.form-title{font-family:'Syne',sans-serif;font-size:1.7rem;font-weight:800;margin-bottom:8px}
+.form-subtitle{font-size:14px;color:var(--muted);margin-bottom:36px}
+
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+@media(max-width:560px){.form-grid{grid-template-columns:1fr}}
+
+.form-group{display:flex;flex-direction:column;gap:6px}
+.form-label{font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--muted)}
+.form-input,.form-select{
+  background:rgba(255,255,255,.04);border:1.5px solid var(--border);
+  border-radius:var(--radius-sm);padding:13px 14px;
+  color:var(--text);font-family:'DM Sans',sans-serif;font-size:15px;
+  transition:border-color .2s;
+  -webkit-appearance:none;appearance:none;
+}
+.form-select{
+  background-image:url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L6 7L11 1' stroke='%238080a0' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 14px center;
+  padding-right:36px;cursor:pointer;
+  background-color:rgba(255,255,255,.04);
+}
+.form-select option{background:#1f1f29;color:var(--text)}
+.form-input:focus,.form-select:focus{outline:none;border-color:var(--accent)}
+.form-input.error,.form-select.error{border-color:var(--accent2)}
+.form-input.valid{border-color:var(--accent3)}
+.form-hint{font-size:11px;color:var(--muted)}
+.form-hint.err{color:var(--accent2)}
+.form-hint.ok{color:var(--accent3)}
+
+.form-readonly{
+  background:rgba(124,92,252,.07);border:1.5px solid rgba(124,92,252,.2);
+  border-radius:var(--radius-sm);padding:13px 16px;
+}
+.form-readonly-name{font-size:14px;font-weight:600;color:var(--text);margin-bottom:2px}
+.form-readonly-detail{font-size:12px;color:rgba(124,92,252,.8)}
+.form-section-label{
+  font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);
+  margin:24px 0 14px;padding-bottom:8px;border-bottom:1px solid var(--border);
+}
+
+/* ════════════════════════════════════════
+   SCREEN: QUIZ
+════════════════════════════════════════ */
+#screen-quiz{padding:28px 0 120px}
+.section-label{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:28px}
+
+.question-card{
+  background:rgba(22,22,30,.85);border:1px solid var(--border);
+  border-radius:var(--radius);padding:22px 22px 18px;margin-bottom:12px;
+  transition:border-color .2s;backdrop-filter:blur(6px);
+}
+.question-card:hover{border-color:#3a3a50}
+.question-num{font-size:11px;font-weight:700;color:var(--accent);letter-spacing:.08em;margin-bottom:8px}
+.question-text{font-size:15px;color:var(--text);line-height:1.55;margin-bottom:16px}
+
+.options{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+@media(max-width:480px){.options{grid-template-columns:1fr}}
+.option-btn{
+  background:rgba(255,255,255,.03);border:1.5px solid var(--border);
+  border-radius:var(--radius-sm);padding:10px 8px;
+  cursor:pointer;font-family:'DM Sans',sans-serif;font-size:13px;
+  color:var(--muted);text-align:center;transition:all .18s;line-height:1.35;
+}
+.option-btn:hover{border-color:var(--accent);color:var(--text);background:rgba(124,92,252,.1)}
+.option-btn.sel-0{border-color:var(--accent2);color:var(--accent2);background:rgba(255,107,138,.08)}
+.option-btn.sel-1{border-color:var(--accent4);color:var(--accent4);background:rgba(249,200,70,.08)}
+.option-btn.sel-2{border-color:var(--accent3);color:var(--accent3);background:rgba(67,233,123,.08)}
+.option-icon{font-size:18px;display:block;margin-bottom:4px}
+
+.quiz-footer{
+  position:fixed;bottom:0;left:0;right:0;
+  background:rgba(10,10,16,.96);backdrop-filter:blur(16px);
+  border-top:1px solid var(--border);
+  padding:14px 20px;z-index:50;
+  display:flex;justify-content:space-between;align-items:center;
+}
+.answered-count{font-size:13px;color:var(--muted)}
+.answered-count strong{color:var(--text)}
+
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+.unanswered-warn{border-color:var(--accent2)!important;animation:shake .35s ease}
+
+/* ════════════════════════════════════════
+   SCREEN: RESULTS
+════════════════════════════════════════ */
+#screen-results{padding:40px 0 100px}
+.results-eyebrow{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent3);display:block;margin-bottom:14px}
+.results-title{font-family:'Syne',sans-serif;font-size:clamp(1.5rem,5vw,2.3rem);font-weight:800;line-height:1.15;margin-bottom:10px}
+.results-sub{font-size:15px;color:var(--muted);margin-bottom:32px}
+
+.chart-section{background:rgba(22,22,30,.85);border:1px solid var(--border);border-radius:var(--radius);padding:22px;margin-bottom:28px;backdrop-filter:blur(8px)}
+.chart-section-title{font-family:'Syne',sans-serif;font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:16px}
+.chart-row{margin-bottom:11px}
+.chart-row-header{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:5px}
+.chart-area-name{font-size:13px;color:var(--text)}
+.chart-score{font-family:'Syne',sans-serif;font-size:13px;font-weight:700}
+.chart-bar-track{height:5px;background:var(--surface2);border-radius:99px;overflow:hidden}
+.chart-bar-fill{height:100%;border-radius:99px;transition:width 1s cubic-bezier(.4,0,.2,1);width:0%;background:linear-gradient(90deg,var(--accent),var(--accent2))}
+.bar-t1{background:linear-gradient(90deg,var(--accent3),#20d6a0)}
+.bar-t2{background:linear-gradient(90deg,var(--accent4),#f0883e)}
+.bar-t3{background:linear-gradient(90deg,var(--accent),#c084fc)}
+
+.result-section-title{font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin:28px 0 12px}
+
+.area-card{border-radius:var(--radius);border:1px solid var(--border);overflow:hidden;margin-bottom:16px;background:rgba(22,22,30,.85);backdrop-filter:blur(8px)}
+.area-card-header{padding:20px 22px 16px;display:flex;align-items:flex-start;gap:14px;border-bottom:1px solid var(--border)}
+.area-emoji{font-size:26px;flex-shrink:0;margin-top:2px}
+.area-rank-badge{font-family:'Syne',sans-serif;font-size:11px;font-weight:800;padding:3px 10px;border-radius:99px;letter-spacing:.05em;display:inline-block;margin-bottom:6px}
+.rk1{background:rgba(67,233,123,.12);color:var(--accent3);border:1px solid rgba(67,233,123,.25)}
+.rk2{background:rgba(249,200,70,.12);color:var(--accent4);border:1px solid rgba(249,200,70,.25)}
+.rk3{background:rgba(124,92,252,.12);color:var(--accent);border:1px solid rgba(124,92,252,.25)}
+.area-card-name{font-family:'Syne',sans-serif;font-size:16px;font-weight:700;margin-bottom:5px}
+.area-card-desc{font-size:14px;color:#9090b8;line-height:1.6}
+.articulacion-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(249,200,70,.08);border:1px solid rgba(249,200,70,.25);border-radius:99px;padding:4px 12px;font-size:12px;color:var(--accent4);margin-top:8px}
+
+.area-card-body{padding:18px 22px}
+.careers-label{font-family:'Syne',sans-serif;font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px}
+.career-item{border:1px solid var(--border);border-radius:var(--radius-sm);padding:14px;margin-bottom:8px;background:rgba(31,31,41,.7)}
+.career-item:last-child{margin-bottom:0}
+.career-name{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;margin-bottom:4px}
+.career-desc{font-size:13px;color:#9090b8;line-height:1.5;margin-bottom:8px}
+.career-meta{display:flex;flex-wrap:wrap;gap:6px}
+.meta-tag{font-size:11px;font-weight:600;letter-spacing:.03em;padding:3px 10px;border-radius:99px}
+.mw{background:rgba(124,92,252,.1);color:var(--accent);border:1px solid rgba(124,92,252,.2)}
+.mp{background:rgba(255,107,138,.1);color:var(--accent2);border:1px solid rgba(255,107,138,.2)}
+.md{background:rgba(67,233,123,.1);color:var(--accent3);border:1px solid rgba(67,233,123,.2)}
+.mv{background:rgba(249,200,70,.1);color:var(--accent4);border:1px solid rgba(249,200,70,.2)}
+
+.gratuidad-box{background:rgba(124,92,252,.06);border:1px solid rgba(124,92,252,.18);border-radius:var(--radius);padding:20px 22px;margin:28px 0;display:flex;gap:14px}
+.gratuidad-icon{font-size:22px;flex-shrink:0}
+.gratuidad-title{font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:var(--accent);margin-bottom:5px}
+.gratuidad-text{font-size:13px;color:#9090b8;line-height:1.6}
+.gratuidad-text strong{color:var(--text)}
+
+.results-footer{display:flex;gap:10px;flex-wrap:wrap;margin-top:28px;padding-top:22px;border-top:1px solid var(--border)}
+.print-hint{font-size:11px;color:var(--muted);width:100%;line-height:1.5}
+.print-hint strong{color:var(--accent4)}
+
+/* ════════════════════════════════════════
+   ANIMATIONS
+════════════════════════════════════════ */
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+.anim{animation:fadeUp .4s ease both}
+.d1{animation-delay:.06s}.d2{animation-delay:.13s}.d3{animation-delay:.2s}
+.d4{animation-delay:.28s}.d5{animation-delay:.36s}
+
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:99px}
+
+/* ════════════════════════════════════════
+   PRINT DOC (hidden on screen)
+════════════════════════════════════════ */
+#print-doc{display:none}
+
+/* ════════════════════════════════════════
+   @MEDIA PRINT
+════════════════════════════════════════ */
+@media print{
+  *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+  body{background:#fff!important;color:#111!important;font-family:Arial,Helvetica,sans-serif!important;font-size:10pt}
+  .bg-wrap,.site-brand,#progress-bar-wrap,.screen,.quiz-footer{display:none!important}
+  #print-doc{display:block!important}
+  @page{margin:16mm 14mm}
+
+  .pd-header{text-align:center;border-bottom:2.5px solid #111;padding-bottom:12px;margin-bottom:14px}
+  .pd-header h1{font-size:13pt;font-weight:900;text-transform:uppercase;letter-spacing:.05em;margin-bottom:3px}
+  .pd-header p{font-size:8.5pt;color:#444}
+
+  .pd-stitle{font-size:8.5pt;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#333;border-bottom:1px solid #bbb;padding-bottom:4px;margin:14px 0 8px}
+
+  .pd-info-grid{display:grid;grid-template-columns:1fr 1fr;gap:5px 18px;margin-bottom:6px}
+  .pd-info-row{font-size:9.5pt}
+  .pd-il{font-weight:700;color:#333}
+  .pd-iv{color:#111}
+
+  .pd-prof{background:#f5f5f5!important;border:1px solid #ccc;border-radius:4px;padding:8px 12px;margin-top:6px}
+  .pd-prof-name{font-size:10pt;font-weight:700}
+  .pd-prof-det{font-size:8.5pt;color:#555}
+
+  /* Synthesis */
+  .pd-synthesis{background:#f0eeff!important;border:1px solid #c5b8ff;border-left:4px solid #7c5cfc;border-radius:4px;padding:10px 14px;margin-top:8px}
+  .pd-synthesis p{font-size:9pt;line-height:1.65;color:#1a1a2e;text-align:justify}
+
+  /* Response tables */
+  .pd-area-block{margin-bottom:12px;page-break-inside:avoid}
+  .pd-area-hd{display:flex;justify-content:space-between;background:#f0f0f0!important;border:1px solid #ccc;padding:5px 10px;border-radius:4px 4px 0 0}
+  .pd-area-hd-name{font-size:9pt;font-weight:700}
+  .pd-area-hd-score{font-size:9pt;font-weight:700}
+  .pd-qt{width:100%;border-collapse:collapse}
+  .pd-qt th{background:#e8e8e8!important;font-size:7.5pt;font-weight:700;text-align:left;padding:4px 8px;border:1px solid #ccc;color:#333}
+  .pd-qt td{font-size:8pt;padding:4px 8px;border:1px solid #ddd;vertical-align:top}
+  .pd-qt tr:nth-child(even) td{background:#fafafa!important}
+  .r0{color:#c0392b;font-weight:600}
+  .r1{color:#d68910;font-weight:600}
+  .r2{color:#27ae60;font-weight:600}
+
+  /* Score summary */
+  .pd-st{width:100%;border-collapse:collapse}
+  .pd-st th{background:#e8e8e8!important;font-size:8pt;font-weight:700;text-align:left;padding:5px 10px;border:1px solid #ccc}
+  .pd-st td{font-size:8.5pt;padding:5px 10px;border:1px solid #ddd}
+  .pd-st tr.top td{background:#eaf8f0!important;font-weight:700}
+  .pd-bar-out{height:7px;background:#e0e0e0!important;border-radius:4px;overflow:hidden;width:110px}
+  .pd-bar-in{height:100%;background:#3a7a5c!important;border-radius:4px}
+
+  /* Top areas */
+  .pd-top{border:1px solid #bbb;border-radius:6px;margin-bottom:10px;page-break-inside:avoid}
+  .pd-top-hd{background:#f0f0f0!important;border-bottom:1px solid #bbb;padding:7px 12px}
+  .pd-top-title{font-size:10pt;font-weight:700}
+  .pd-top-desc{font-size:8pt;color:#444;margin-top:2px}
+  .pd-top-body{padding:8px 12px}
+  .pd-career{font-size:8pt;margin-bottom:5px;border-bottom:1px dotted #ddd;padding-bottom:5px}
+  .pd-career:last-child{border-bottom:none;margin-bottom:0}
+  .pd-cn{font-weight:700;margin-bottom:2px}
+  .pd-cd{color:#555}
+  .pd-cm{margin-top:3px;font-size:7.5pt}
+  .rp{color:#c0392b;font-weight:700}
+  .rd{color:#27ae60;font-weight:700}
+  .rv{color:#d68910;font-weight:700}
+
+  /* Observations */
+  .pd-obs-line{border-bottom:1px solid #aaa;height:22px;margin-bottom:5px}
+
+  /* Signature — CENTERED */
+  .pd-sig-wrap{margin-top:50px;display:flex;justify-content:center}
+  .pd-sig-block{text-align:center;width:280px}
+  .pd-sig-line{border-top:1.5px solid #333;margin-bottom:7px}
+  .pd-sig-name{font-size:9.5pt;font-weight:700}
+  .pd-sig-det{font-size:8pt;color:#555}
+  .pd-sig-date{font-size:8pt;color:#555;margin-top:6px}
+}
+</style>
+</head>
+<body>
+
+<!-- ─── ANIMATED BACKGROUND ─── -->
+<div class="bg-wrap">
+  <div class="bg-grid"></div>
+  <div class="orb o1"></div>
+  <div class="orb o2"></div>
+  <div class="orb o3"></div>
+  <div class="orb o4"></div>
+  <div class="orb o5"></div>
+  <div class="shimmer"></div>
+</div>
+
+<!-- ─── BRAND WATERMARK ─── -->
+<div class="site-brand">Test vocacional por <strong>TOPIE</strong> &nbsp;·&nbsp; síguenos en <strong>@toenpie</strong></div>
+
+<!-- ─── PROGRESS BAR ─── -->
+<div id="progress-bar-wrap">
+  <div class="container">
+    <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
+    <div class="progress-label" id="progress-label">0 / 50 respondidas</div>
+  </div>
+</div>
+
+<!-- ══════════ SCREEN 0 — INTRO ══════════ -->
+<div id="screen-intro" class="screen active">
+  <div class="container">
+    <div style="padding-top:64px"></div>
+    <div class="anim" style="margin-bottom:22px">
+      <svg width="72" height="72" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="TOPIE Recursos PIE">
+        <circle cx="50" cy="50" r="49" fill="#e8971e"/>
+        <circle cx="50" cy="50" r="44" fill="#2d5f80"/>
+        <text x="50" y="53" text-anchor="middle" fill="white" font-family="'Open Sans', Arial, sans-serif" font-weight="800" font-size="22" letter-spacing="-0.5">TOPIE</text>
+        <text x="50" y="65" text-anchor="middle" fill="#e8971e" font-family="'Open Sans', Arial, sans-serif" font-weight="700" font-size="7.5" letter-spacing="2">RECURSOS PIE</text>
+      </svg>
+    </div>
+    <div class="intro-eyebrow anim">Test de Orientación Vocacional · PIE Chile 2026</div>
+    <h1 class="intro-title anim d1">¿Qué sigue<br>después del liceo?</h1>
+    <p class="intro-sub anim d2">Este test te ayuda a descubrir qué áreas profesionales se alinean mejor con tus intereses. Al final verás carreras concretas, dónde estudiarlas y si necesitas PAES o no.</p>
+    <div class="intro-tags anim d3">
+      <div class="intro-tag">⏱ <span>~10 minutos</span></div>
+      <div class="intro-tag">❓ <span>50 preguntas</span></div>
+      <div class="intro-tag">🎯 <span>10 áreas de estudio</span></div>
+      <div class="intro-tag">🇨🇱 <span>Contexto chileno</span></div>
+    </div>
+    <button class="btn-primary anim d4" id="btn-start">
+      Comenzar
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8H13M13 8L9 4M13 8L9 12" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <p class="disclaimer anim d5">No existen respuestas correctas ni incorrectas. Responde con honestidad según cómo eres hoy. Este test es una orientación, no una decisión definitiva.</p>
+    <div style="padding-bottom:80px"></div>
+  </div>
+</div>
+
+<!-- ══════════ SCREEN 1 — DATOS ══════════ -->
+<div id="screen-datos" class="screen">
+  <div class="container">
+    <div style="padding-top:48px"></div>
+    <h2 class="form-title anim">Antes de comenzar</h2>
+    <p class="form-subtitle anim d1">Completa tus datos para personalizar los resultados y generar el registro de evaluación PIE.</p>
+
+    <div class="form-section-label">Datos del estudiante</div>
+    <div class="form-group anim d1" style="margin-bottom:16px">
+      <label class="form-label" for="inp-nombre">Nombre completo</label>
+      <input class="form-input" id="inp-nombre" type="text" placeholder="Ej: Jaime Muñoz Contreras" autocomplete="name">
+      <span class="form-hint" id="hint-nombre"></span>
+    </div>
+
+    <div class="form-grid anim d2">
+      <div class="form-group">
+        <label class="form-label" for="inp-curso">Curso</label>
+        <select class="form-select" id="inp-curso">
+          <option value="">— Seleccionar —</option>
+          <option>III°A</option><option>III°B</option><option>III°C</option>
+          <option>IV°A</option><option>IV°B</option><option>IV°C</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="inp-especialidad">Especialidad</label>
+        <select class="form-select" id="inp-especialidad">
+          <option value="">— Seleccionar —</option>
+          <option>Telecomunicaciones</option>
+          <option>Electrónica</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-grid anim d3">
+      <div class="form-group">
+        <label class="form-label" for="inp-rut">RUT</label>
+        <input class="form-input" id="inp-rut" type="text" placeholder="12.345.678-9" maxlength="12" inputmode="numeric">
+        <span class="form-hint" id="hint-rut">Formato: nn.nnn.nnn-n</span>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="inp-fecha">Fecha de evaluación</label>
+        <input class="form-input" id="inp-fecha" type="text" placeholder="dd-mm-aaaa" maxlength="10" inputmode="numeric">
+        <span class="form-hint" id="hint-fecha">Formato: dd-mm-aaaa</span>
+      </div>
+    </div>
+
+    <div class="form-section-label" style="margin-top:28px">Profesional aplicador</div>
+    <div class="form-group anim d4" style="margin-bottom:16px">
+      <label class="form-label" for="inp-prof-nombre">Nombre completo del profesional</label>
+      <input class="form-input" id="inp-prof-nombre" type="text" placeholder="Ingrese nombre del profesional">
+    </div>
+    <div class="form-grid anim d4">
+      <div class="form-group">
+        <label class="form-label" for="inp-prof-profesion">Profesión</label>
+        <input class="form-input" id="inp-prof-profesion" type="text" placeholder="Ej: Terapeuta Ocupacional">
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="inp-prof-registro">N° Registro Sup. de Salud</label>
+        <input class="form-input" id="inp-prof-registro" type="text" placeholder="Ej: 123456" inputmode="numeric">
+      </div>
+    </div>
+    <div style="margin-top:32px" class="anim d5">
+      <button class="btn-primary" id="btn-go-quiz">
+        Iniciar test
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8H13M13 8L9 4M13 8L9 12" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+    <div style="padding-bottom:80px"></div>
+  </div>
+</div>
+
+<!-- ══════════ SCREEN 2 — QUIZ ══════════ -->
+<div id="screen-quiz" class="screen">
+  <div class="container">
+    <div style="padding-top:28px"></div>
+    <p class="section-label">Responde según tu interés real — sin pensar demasiado</p>
+    <div id="questions-container"></div>
+    <div style="padding-bottom:120px"></div>
+  </div>
+  <div class="quiz-footer">
+    <div class="answered-count"><strong id="answered-num">0</strong> / 50 respondidas</div>
+    <button class="btn-submit" id="btn-submit">
+      Ver mis resultados
+      <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8H13M13 8L9 4M13 8L9 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+  </div>
+</div>
+
+<!-- ══════════ SCREEN 3 — RESULTS ══════════ -->
+<div id="screen-results" class="screen">
+  <div class="container">
+    <div style="padding-top:40px"></div>
+    <span class="results-eyebrow anim">Tus resultados están listos ✓</span>
+    <h2 class="results-title anim d1" id="results-title">Tus áreas más afines</h2>
+    <p class="results-sub anim d2" id="results-sub"></p>
+
+    <div class="chart-section anim d2">
+      <div class="chart-section-title">Puntaje por área (0 – 10)</div>
+      <div id="chart-rows"></div>
+    </div>
+
+    <div class="result-section-title anim">Tus 3 áreas principales — carreras y requisitos</div>
+    <div id="top-areas-container"></div>
+
+    <div class="gratuidad-box anim">
+      <div class="gratuidad-icon">💰</div>
+      <div>
+        <div class="gratuidad-title">¿Puedo estudiar gratis? — Gratuidad en Chile</div>
+        <div class="gratuidad-text">Si perteneces al <strong>60% de menores ingresos</strong> del país, puedes acceder a la Gratuidad del MINEDUC, que cubre el arancel completo en universidades, IPs y CFTs adscritos. Verifica tu elegibilidad en <strong>mifuturo.cl</strong>. Consulta también por el programa <strong>PACE</strong>, que puede garantizarte cupos en universidades si tu liceo participa.</div>
+      </div>
+    </div>
+
+    <div class="results-footer anim">
+      <button class="btn-print" id="btn-print">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+        Imprimir / Guardar PDF (Registro PIE)
+      </button>
+      <button class="btn-secondary" id="btn-restart">
+        <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M2 8C2 4.69 4.69 2 8 2C10.06 2 11.86 3.04 12.93 4.63M14 8C14 11.31 11.31 14 8 14C5.94 14 4.14 12.96 3.07 11.37" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M13 2V5H10M3 14V11H6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Nuevo test
+      </button>
+      <p class="print-hint">💡 En el diálogo de impresión, desactiva <strong>"Encabezados y pies de página"</strong> (o "Headers and footers") para omitir la fecha y URL del navegador en el documento.</p>
+    </div>
+    <div style="padding-bottom:80px"></div>
+  </div>
+</div>
+
+<!-- ══════════ PRINT DOCUMENT ══════════ -->
+<div id="print-doc">
+  <div id="pd-content"></div>
+</div>
+
+<script>
+/* ══════════════════════════════════════════
+   DATA: AREAS
+══════════════════════════════════════════ */
+const AREAS = [
+  {id:0,name:"Electrónica, Telecomunicaciones y Redes",emoji:"⚡",
+   desc:"La continuación natural de tu especialidad del liceo. Diseño, instalación y mantenimiento de sistemas de comunicación, redes de datos, automatización industrial y circuitos electrónicos.",
+   articulacion:true,
+   careers:[
+    {name:"Ing. Civil Electrónica / Eléctrica",desc:"Diseñarás sistemas de energía, microcontroladores y circuitos complejos para grandes industrias.",where:"USACH, UTEM, U. de Chile, PUC",req:"PAES (M2 + Ciencias)",rt:"paes"},
+    {name:"Ing. en Telecomunicaciones / Conectividad y Redes",desc:"Diseño de redes de fibra óptica, satelitales, antenas y tecnología 5G.",where:"USACH, UDP, INACAP, Duoc UC",req:"Variable: Ues=PAES / IP=Directo",rt:"variable"},
+    {name:"Técnico en Automatización y Robótica Industrial",desc:"Programarás PLC y máquinas robotizadas para fábricas y mineras.",where:"INACAP, Duoc UC, AIEP",req:"Ingreso Directo (Articulación EMTP)",rt:"directo"},
+    {name:"Técnico en Telecomunicaciones / Ciberseguridad",desc:"Instalación de redes, configuración de routers y protección contra ciberataques.",where:"Duoc UC, AIEP, CIISA",req:"Ingreso Directo — Alta empleabilidad",rt:"directo"}
+   ]},
+  {id:1,name:"Informática, Software y Datos",emoji:"💻",
+   desc:"Del hardware al software. Creación de programas, apps móviles, bases de datos e inteligencia artificial. Ideal para personas lógicas que disfrutan resolver problemas complejos.",
+   articulacion:true,
+   careers:[
+    {name:"Ingeniería Civil Informática",desc:"Sistemas complejos, inteligencia artificial y gestión de grandes bases de datos.",where:"UTFSM, USACH, UAI",req:"PAES (M2 obligatoria)",rt:"paes"},
+    {name:"Desarrollo de Software / Analista Programador",desc:"Carrera técnica enfocada 100% en escribir código para apps y páginas web.",where:"INACAP, Duoc UC, CIISA",req:"Ingreso Directo — Sin PAES",rt:"directo"}
+   ]},
+  {id:2,name:"Salud y Bienestar",emoji:"🏥",
+   desc:"Dedicado al servicio humano. Prevención, diagnóstico, tratamiento y rehabilitación de personas. Requiere vocación, empatía y compromiso.",
+   articulacion:false,
+   careers:[
+    {name:"Medicina / Odontología",desc:"Diagnóstico y tratamiento integral. Muchos años de estudio y alto puntaje.",where:"U. de Chile, PUC, USACH",req:"PAES (puntaje alto en Ciencias)",rt:"paes"},
+    {name:"Enfermería / Terapia Ocupacional / Kinesiología",desc:"Cuidado de pacientes, rehabilitación física y apoyo a la autonomía diaria.",where:"UDP, UNAB, U. Central, UMCE",req:"PAES (énfasis en Ciencias)",rt:"paes"},
+    {name:"Técnico en Enfermería (TENS)",desc:"Carrera práctica de 2,5 años. Asistencia directa a equipos médicos y pacientes.",where:"Duoc UC, AIEP, ENAC",req:"Ingreso Directo — Sin PAES",rt:"directo"}
+   ]},
+  {id:3,name:"Ciencias Básicas, de la Tierra y Minería",emoji:"🔬",
+   desc:"Estudio profundo de la naturaleza: física, geología, astronomía y recursos minerales. El cobre y el litio son sectores clave y los mejor remunerados de la economía chilena.",
+   articulacion:false,
+   careers:[
+    {name:"Astronomía / Licenciatura en Física",desc:"Universo, leyes del movimiento, estrellas y galaxias. Para quienes aman la ciencia pura.",where:"U. de Chile, PUC, U. Central",req:"PAES (M2 obligatoria)",rt:"paes"},
+    {name:"Ingeniería Civil en Minas / Geología",desc:"Extracción tecnológica de minerales y estudio de sismos, volcanes y formaciones geológicas.",where:"U. de Chile, USACH, UNAB",req:"PAES (M2 obligatoria)",rt:"paes"}
+   ]},
+  {id:4,name:"Logística, Operaciones y Prevención",emoji:"🏗️",
+   desc:"Gestión de la cadena de suministro y aseguramiento de condiciones seguras de trabajo. Para personas ordenadas que disfrutan coordinar procesos complejos.",
+   articulacion:false,
+   careers:[
+    {name:"Ingeniería en Prevención de Riesgos",desc:"Garantizar que los trabajadores no sufran accidentes en empresas, minas y obras.",where:"UTEM, INACAP, Duoc UC",req:"Variable: Ues=PAES / IP=Directo",rt:"variable"},
+    {name:"Ingeniería / Técnico en Logística",desc:"Gestión de bodegas, transporte y envíos a nivel nacional e internacional.",where:"Duoc UC, AIEP, INACAP",req:"Ingreso Directo — Alta empleabilidad",rt:"directo"}
+   ]},
+  {id:5,name:"Agropecuaria, Veterinaria y Medio Ambiente",emoji:"🌿",
+   desc:"Para quienes tienen conexión con la naturaleza. Cuidado de animales, producción sustentable y protección de ecosistemas. Tu oficina puede ser el campo o el mar.",
+   articulacion:false,
+   careers:[
+    {name:"Medicina Veterinaria / Agronomía",desc:"Diagnóstico de salud animal y mejora en la producción de frutas, verduras y viñedos.",where:"U. de Chile, U. Mayor, PUC",req:"PAES (alta ponderación en Ciencias)",rt:"paes"}
+   ]},
+  {id:6,name:"Gastronomía, Turismo y Hotelería",emoji:"🍽️",
+   desc:"El mundo de los servicios y las experiencias. Combina creatividad culinaria con gestión de alojamientos y planificación de viajes.",
+   articulacion:false,
+   careers:[
+    {name:"Gastronomía / Turismo / Ecoturismo",desc:"Arte culinario, administración de hoteles, agencias de viaje y turismo sustentable.",where:"INACAP, Duoc UC, UNAB",req:"Variable: IPs ofrecen ingreso directo",rt:"variable"}
+   ]},
+  {id:7,name:"Ciencias Sociales, Humanidades y Educación",emoji:"📚",
+   desc:"Comprensión de cómo piensan y se organizan los seres humanos. Leyes, psicología y formación de nuevas generaciones. Para quienes valoran la justicia y el impacto social.",
+   articulacion:false,
+   careers:[
+    {name:"Psicología / Derecho",desc:"Comportamiento humano, defensa legal y resolución de conflictos.",where:"UDP, U. de Chile, PUC",req:"PAES (Historia o Ciencias)",rt:"paes"},
+    {name:"Pedagogías (Lenguaje, Matemática, etc.)",desc:"Formación de futuras generaciones. Alta vocación y puntaje mínimo legal.",where:"UMCE, USACH, U. Silva Henríquez",req:"PAES (puntaje mínimo por ley)",rt:"paes"}
+   ]},
+  {id:8,name:"Arte, Diseño y Creatividad",emoji:"🎨",
+   desc:"Donde la imaginación se vuelve tangible. Diseño de edificios, animaciones, identidades de marca e interfaces digitales. Para quienes piensan y comunican de forma visual.",
+   articulacion:false,
+   careers:[
+    {name:"Arquitectura",desc:"Diseño y proyección de edificios y ciudades, combinando arte con cálculo estructural.",where:"FAU U. de Chile, PUC, UDP",req:"PAES (M1 obligatoria)",rt:"paes"},
+    {name:"Diseño Gráfico / Animación Digital",desc:"Comunicación visual, logos, interfaces web y personajes 2D/3D para videojuegos y cine.",where:"UTEM, Duoc UC, U. Mayor",req:"Variable: según institución",rt:"variable"}
+   ]},
+  {id:9,name:"Administración, Negocios y Producción",emoji:"📊",
+   desc:"El motor económico. Gestión de dinero, liderazgo de equipos, emprendimiento y dirección de empresas. Para personas con visión estratégica y habilidad comunicativa.",
+   articulacion:false,
+   careers:[
+    {name:"Ingeniería Comercial",desc:"Gestión de empresas, economía y marketing. Amplio campo laboral en Chile.",where:"U. de Chile, PUC, UDD",req:"PAES (Historia o Ciencias)",rt:"paes"},
+    {name:"Administración de Empresas / Contabilidad",desc:"Gestión práctica de negocios, finanzas, inventarios y recursos humanos.",where:"INACAP, Duoc UC, AIEP",req:"Ingreso Directo — Sin PAES",rt:"directo"}
+   ]}
+];
+
+/* ── PIE REPORT TEMPLATES per area ── */
+const AREA_REPORT = [
+  {actividades:"el diseño, la instalación y el mantenimiento de sistemas electrónicos, redes de comunicación y automatización industrial",
+   habilidades:"técnico-procedimentales, pensamiento lógico-analítico y resolución de problemas de orden tecnológico",
+   orientacion:"el trabajo con equipos, circuitos, sistemas automatizados y tecnologías de conectividad"},
+  {actividades:"el desarrollo de software, la programación y el análisis de datos mediante herramientas digitales",
+   habilidades:"lógico-matemáticas, pensamiento computacional y resolución sistemática de problemas",
+   orientacion:"la creación de aplicaciones, sistemas digitales y soluciones de base informática"},
+  {actividades:"el cuidado, la rehabilitación y el acompañamiento de personas en contextos de salud",
+   habilidades:"socioemocionales, empatía, escucha activa y disposición hacia el trabajo con personas en situación de vulnerabilidad o enfermedad",
+   orientacion:"el desempeño en entornos hospitalarios, clínicos y comunitarios con vocación de servicio"},
+  {actividades:"la investigación científica, la experimentación y el análisis de fenómenos naturales y geológicos",
+   habilidades:"razonamiento científico, pensamiento analítico y curiosidad intelectual hacia la comprensión del entorno natural y físico",
+   orientacion:"la indagación sistemática, la investigación aplicada y el trabajo en contextos de ciencia exacta o industria extractiva"},
+  {actividades:"la organización de procesos operacionales, la coordinación de cadenas logísticas y la gestión de la seguridad laboral",
+   habilidades:"planificación, atención al detalle, capacidad organizativa y orientación a la prevención de riesgos en el entorno laboral",
+   orientacion:"el desempeño en contextos industriales, logísticos y de gestión operacional en empresas y organismos públicos"},
+  {actividades:"el cuidado del medioambiente, la producción sustentable de alimentos y la atención a la salud animal",
+   habilidades:"responsabilidad ambiental, trabajo en terreno y conexión con el entorno natural, ecológico y agropecuario",
+   orientacion:"el desempeño en contextos rurales, agropecuarios, veterinarios y de conservación ambiental"},
+  {actividades:"la cocina, la hospitalidad, la organización de experiencias y el servicio al cliente en contextos turísticos y gastronómicos",
+   habilidades:"creatividad, habilidades interpersonales, adaptabilidad y capacidad para desenvolverse en ambientes dinámicos de atención al público",
+   orientacion:"el desempeño en gastronomía, hotelería, turismo y gestión de experiencias en contextos nacionales e internacionales"},
+  {actividades:"la comprensión del comportamiento humano, la defensa de derechos y la formación de otras personas",
+   habilidades:"comunicación verbal, pensamiento crítico, empatía y vocación hacia el impacto social, educativo y jurídico",
+   orientacion:"el ejercicio profesional en psicología, derecho, pedagogía u otras disciplinas orientadas al bienestar social y comunitario"},
+  {actividades:"el diseño visual, la creación artística y la expresión mediante medios gráficos, digitales o espaciales",
+   habilidades:"creatividad visual, pensamiento divergente, sensibilidad estética y habilidades de comunicación no verbal",
+   orientacion:"el trabajo en diseño, arquitectura, animación digital y producción creativa de contenidos visuales"},
+  {actividades:"la gestión de equipos, el análisis de negocios y la toma de decisiones en contextos organizacionales",
+   habilidades:"liderazgo, pensamiento estratégico, comunicación persuasiva y orientación a resultados en entornos empresariales",
+   orientacion:"el desempeño en roles de dirección, emprendimiento y gestión de organizaciones públicas o privadas"}
+];
+
+/* ── QUESTIONS ── */
+const RAW_Q = [
+  {a:0,t:"¿Te llama la atención entender cómo funcionan las antenas, el Wi-Fi o la señal del celular?"},
+  {a:0,t:"¿Disfrutarías armando, instalando o reparando equipos electrónicos?"},
+  {a:0,t:"¿Te gustaría aprender a configurar redes o proteger sistemas de ataques informáticos (ciberseguridad)?"},
+  {a:0,t:"¿Te interesa programar máquinas o robots industriales para que trabajen de forma automatizada?"},
+  {a:0,t:"¿Sientes que tu especialidad del liceo te dio conocimientos que querrías seguir desarrollando a nivel superior?"},
+  {a:1,t:"¿Te gustaría crear aplicaciones móviles o páginas web desde cero?"},
+  {a:1,t:"¿Disfrutas resolviendo problemas lógicos paso a paso, como si fueran acertijos?"},
+  {a:1,t:"¿Te atrae la idea de trabajar con inteligencia artificial o analizar grandes cantidades de datos?"},
+  {a:1,t:"¿Pasarías horas programando frente a un computador si el proyecto te apasiona?"},
+  {a:1,t:"¿Te interesaría que tu trabajo principal sea desarrollar software o sistemas digitales?"},
+  {a:2,t:"¿Sientes satisfacción cuando puedes ayudar a alguien que está enfermo o tiene dolor?"},
+  {a:2,t:"¿Te interesaría trabajar en hospitales, clínicas o centros de rehabilitación?"},
+  {a:2,t:"¿Te sentirías cómodo/a trabajando a diario con personas que necesitan apoyo continuo durante su recuperación?"},
+  {a:2,t:"¿Te gustaría aprender sobre el cuerpo humano, sus enfermedades y cómo tratarlas?"},
+  {a:2,t:"¿Estarías dispuesto/a a estudiar varios años para llegar a ser un profesional de la salud?"},
+  {a:3,t:"¿Te fascina entender cómo funcionan fenómenos naturales como los terremotos, volcanes o las estrellas?"},
+  {a:3,t:"¿Disfrutas haciendo experimentos en el laboratorio o buscando explicaciones científicas a los fenómenos?"},
+  {a:3,t:"¿Te gustaría trabajar en la minería del cobre o litio, sectores clave de la economía de Chile?"},
+  {a:3,t:"¿Te atrae la idea de investigar el universo, los planetas o las leyes de la física?"},
+  {a:3,t:"¿Te gustaría que tu trabajo requiera usar matemáticas avanzadas o razonamiento científico de forma habitual?"},
+  {a:4,t:"¿Te gustaría asegurarte de que los trabajadores estén seguros y no sufran accidentes laborales?"},
+  {a:4,t:"¿Te interesa entender cómo los productos viajan desde la fábrica hasta el consumidor final?"},
+  {a:4,t:"¿Te atraería un trabajo donde debas coordinar múltiples tareas y personas para que todo funcione en los plazos correctos?"},
+  {a:4,t:"¿Te atraería trabajar coordinando bodegas, puertos o flotas de transporte de mercancías?"},
+  {a:4,t:"¿Te gustaría identificar y eliminar riesgos en ambientes laborales como minas, fábricas u obras de construcción?"},
+  {a:5,t:"¿Sientes una conexión especial con los animales y disfrutas cuidarlos?"},
+  {a:5,t:"¿Te preocupa el medio ambiente y te gustaría trabajar activamente para protegerlo?"},
+  {a:5,t:"¿Te gustaría trabajar al aire libre, en el campo, en el mar o en contacto directo con la naturaleza?"},
+  {a:5,t:"¿Te interesa saber cómo se producen los alimentos que comemos de forma sustentable y responsable?"},
+  {a:5,t:"¿Te gustaría diagnosticar enfermedades en animales o mejorar cultivos agrícolas?"},
+  {a:6,t:"¿Disfrutas cocinar y experimentar con ingredientes o recetas nuevas?"},
+  {a:6,t:"¿Te gustaría trabajar en un hotel, restaurante o agencia de viajes?"},
+  {a:6,t:"¿Te gustaría trabajar en un ambiente donde el contacto diario con personas de distintas culturas sea parte del rol?"},
+  {a:6,t:"¿Te gustaría planificar y organizar experiencias de viaje o eventos especiales para otras personas?"},
+  {a:6,t:"¿Te gustaría que tu trabajo combine creatividad, movimiento constante y contacto con el público?"},
+  {a:7,t:"¿Te gustaría enseñar a otros y sentir que el aprendizaje de alguien más es también tu logro?"},
+  {a:7,t:"¿Te interesa entender por qué las personas piensan y se comportan de la manera en que lo hacen?"},
+  {a:7,t:"¿Defiendes con pasión la justicia, los derechos humanos o la igualdad de oportunidades?"},
+  {a:7,t:"¿Disfrutas leyendo, escribiendo o debatiendo sobre temas de sociedad, política o cultura?"},
+  {a:7,t:"¿Te gustaría trabajar como psicólogo/a, abogado/a o educador/a?"},
+  {a:8,t:"¿Disfrutas diseñar cosas visualmente atractivas como logos, afiches o interfaces digitales?"},
+  {a:8,t:"¿Te atraería crear personajes, escenarios o animaciones para videojuegos o películas?"},
+  {a:8,t:"¿Tienes facilidad para imaginar cómo podría verse un espacio o edificio antes de que se construya?"},
+  {a:8,t:"¿Pasarías horas dibujando, fotografiando, editando videos o generando contenido visual?"},
+  {a:8,t:"¿Te gustaría que tu trabajo consista principalmente en crear cosas nuevas y originales de forma visual?"},
+  {a:9,t:"¿Te gustaría liderar un equipo de trabajo o dirigir proyectos dentro de una empresa?"},
+  {a:9,t:"¿Tienes ideas de negocio propias o sueñas con emprender tu propia empresa algún día?"},
+  {a:9,t:"¿Te interesa entender cómo las empresas generan dinero, controlan sus costos y se organizan?"},
+  {a:9,t:"¿Te gustaría que tu trabajo implique negociar, persuadir o convencer a otras personas de forma habitual?"},
+  {a:9,t:"¿Te gustaría trabajar en ventas, marketing, finanzas o recursos humanos de una empresa?"}
+];
+
+const RESP_LABELS=["No me llama la atención","Me da lo mismo","Me interesa mucho"];
+const RESP_ICONS=["😐","🤔","🔥"];
+
+function shuffle(arr){const a=[...arr];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+const QUESTIONS = shuffle(RAW_Q.map((q,i)=>({...q,id:i})));
+
+let answers = new Array(QUESTIONS.length).fill(null);
+let studentData = {};
+
+/* ── RUT UTILS ── */
+function formatRUT(val){
+  let v=val.replace(/[^0-9kK]/g,'').toUpperCase();
+  if(!v)return'';
+  const dv=v.slice(-1),body=v.slice(0,-1);
+  if(!body)return dv;
+  let fb='';
+  for(let i=body.length-1,c=0;i>=0;i--,c++){if(c>0&&c%3===0)fb='.'+fb;fb=body[i]+fb}
+  return fb+'-'+dv;
+}
+function validateRUT(rut){
+  const c=rut.replace(/\./g,'').replace(/-/g,'').toUpperCase();
+  if(c.length<2)return false;
+  const body=c.slice(0,-1),dv=c.slice(-1);
+  if(!/^\d+$/.test(body))return false;
+  let sum=0,f=2;
+  for(let i=body.length-1;i>=0;i--){sum+=parseInt(body[i])*f;f=f===7?2:f+1}
+  const comp=11-(sum%11);
+  const exp=comp===11?'0':comp===10?'K':comp.toString();
+  return dv===exp;
+}
+function validateDate(d){
+  const m=d.match(/^(\d{2})-(\d{2})-(\d{4})$/);
+  if(!m)return false;
+  return +m[2]>=1&&+m[2]<=12&&+m[1]>=1&&+m[1]<=31&&+m[3]>=2020&&+m[3]<=2030;
+}
+function autoDate(){
+  const d=new Date();
+  return`${String(d.getDate()).padStart(2,'0')}-${String(d.getMonth()+1).padStart(2,'0')}-${d.getFullYear()}`;
+}
+
+/* ── SCREEN NAV ── */
+function showScreen(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+/* ── PROGRESS ── */
+function updateProgress(){
+  const n=answers.filter(a=>a!==null).length;
+  document.getElementById('progress-fill').style.width=(n/QUESTIONS.length*100)+'%';
+  document.getElementById('progress-label').textContent=`${n} / ${QUESTIONS.length} respondidas`;
+  document.getElementById('answered-num').textContent=n;
+  const btn=document.getElementById('btn-submit');
+  n===QUESTIONS.length?btn.classList.add('enabled'):btn.classList.remove('enabled');
+}
+
+/* ── FORM ── */
+function setupForm(){
+  document.getElementById('inp-fecha').value=autoDate();
+  const rutEl=document.getElementById('inp-rut');
+  rutEl.addEventListener('input',function(){
+    this.value=formatRUT(this.value);
+    const hEl=document.getElementById('hint-rut');
+    if(this.value.length>3){
+      if(validateRUT(this.value)){this.classList.remove('error');this.classList.add('valid');hEl.textContent='RUT válido ✓';hEl.className='form-hint ok'}
+      else{this.classList.remove('valid');this.classList.add('error');hEl.textContent='RUT inválido — revisa los dígitos';hEl.className='form-hint err'}
+    }else{this.classList.remove('valid','error');hEl.textContent='Formato: nn.nnn.nnn-n';hEl.className='form-hint'}
+  });
+  const fechaEl=document.getElementById('inp-fecha');
+  fechaEl.addEventListener('input',function(){
+    const hEl=document.getElementById('hint-fecha');
+    if(this.value.length>=10){
+      if(validateDate(this.value)){this.classList.remove('error');this.classList.add('valid');hEl.textContent='Fecha válida ✓';hEl.className='form-hint ok'}
+      else{this.classList.remove('valid');this.classList.add('error');hEl.textContent='Fecha inválida';hEl.className='form-hint err'}
+    }else{this.classList.remove('valid','error');hEl.textContent='Formato: dd-mm-aaaa';hEl.className='form-hint'}
+  });
+}
+
+function getFormData(){
+  const nombre=document.getElementById('inp-nombre').value.trim();
+  const curso=document.getElementById('inp-curso').value;
+  const esp=document.getElementById('inp-especialidad').value;
+  const rut=document.getElementById('inp-rut').value.trim();
+  const fecha=document.getElementById('inp-fecha').value.trim();
+  const profNombre=document.getElementById('inp-prof-nombre').value.trim();
+  const profProfesion=document.getElementById('inp-prof-profesion').value.trim();
+  const profRegistro=document.getElementById('inp-prof-registro').value.trim();
+  const errs=[];
+  if(!nombre)errs.push('inp-nombre');
+  if(!curso)errs.push('inp-curso');
+  if(!esp)errs.push('inp-especialidad');
+  if(!validateRUT(rut))errs.push('inp-rut');
+  if(!validateDate(fecha))errs.push('inp-fecha');
+  if(!profNombre)errs.push('inp-prof-nombre');
+  if(!profProfesion)errs.push('inp-prof-profesion');
+  if(!profRegistro)errs.push('inp-prof-registro');
+  errs.forEach(id=>{const el=document.getElementById(id);el.classList.add('error');setTimeout(()=>el.classList.remove('error'),2000)});
+  if(errs.length)return null;
+  return{nombre,curso,esp,rut,fecha,firstName:nombre.trim().split(/\s+/)[0],profNombre,profProfesion,profRegistro};
+}
+
+/* ── BUILD QUIZ ── */
+function buildQuiz(){
+  const c=document.getElementById('questions-container');
+  c.innerHTML='';
+  QUESTIONS.forEach((q,idx)=>{
+    const card=document.createElement('div');
+    card.className='question-card';card.id=`qc-${idx}`;
+    card.innerHTML=`
+      <div class="question-num">PREGUNTA ${idx+1} DE ${QUESTIONS.length}</div>
+      <div class="question-text">${q.t}</div>
+      <div class="options">
+        ${[0,1,2].map(v=>`<button class="option-btn" data-idx="${idx}" data-val="${v}"><span class="option-icon">${RESP_ICONS[v]}</span>${RESP_LABELS[v]}</button>`).join('')}
+      </div>`;
+    c.appendChild(card);
+  });
+  c.addEventListener('click',e=>{
+    const btn=e.target.closest('.option-btn');if(!btn)return;
+    const idx=+btn.dataset.idx,val=+btn.dataset.val;
+    answers[idx]=val;
+    const card=document.getElementById(`qc-${idx}`);
+    card.querySelectorAll('.option-btn').forEach(b=>b.classList.remove('sel-0','sel-1','sel-2'));
+    btn.classList.add(`sel-${val}`);
+    card.classList.remove('unanswered-warn');
+    updateProgress();
+  });
+}
+
+/* ── SCORES ── */
+function computeScores(){
+  const s=new Array(10).fill(0);
+  QUESTIONS.forEach((q,i)=>{if(answers[i]!==null)s[q.a]+=answers[i]});
+  return s;
+}
+
+/* ── PIE REPORT TEXT ── */
+function generateReport(ranked){
+  const top=ranked[0],second=ranked[1],third=ranked[2];
+  const t0=AREA_REPORT[top.id];
+  let txt=`${studentData.nombre} evidencia, a través de la aplicación del presente instrumento de orientación vocacional, un perfil de intereses con mayor afinidad hacia el área de ${top.name} (puntaje obtenido: ${top.score}/10). Se observan tendencias hacia ${t0.actividades}, lo que se manifiesta en inclinaciones hacia el desarrollo de habilidades ${t0.habilidades}, con especial orientación a ${t0.orientacion}.`;
+  if(second&&second.score>=4){
+    const t1=AREA_REPORT[second.id];
+    txt+=` De forma complementaria, se registra afinidad con el área de ${second.name} (${second.score}/10), cuyas características apuntan hacia ${t1.orientacion}, lo que amplía el espectro de trayectorias formativas a contemplar en el proceso de orientación.`;
+  }
+  if(third&&third.score>=4){
+    const t2=AREA_REPORT[third.id];
+    txt+=` En un tercer nivel de preferencia, se identifica interés por el área de ${third.name} (${third.score}/10), con orientación hacia ${t2.orientacion}.`;
+  }
+  txt+=` En función de los resultados obtenidos, se contempla el abordaje de intervención desde Terapia Ocupacional orientado a potenciar, explorar y definir propuestas vocacionales coherentes con los intereses identificados y el proyecto de vida de ${studentData.firstName}. Dicho proceso considerará la articulación entre sus intereses, la oferta formativa disponible en el contexto chileno —incluyendo la posible continuidad técnica desde su especialidad EMTP en ${studentData.esp} y otras trayectorias de formación superior— y los recursos del contexto familiar y socioeducativo del/la estudiante.`;
+  return txt;
+}
+
+/* ── BUILD RESULTS ── */
+function mcClass(t){return{paes:'mp',directo:'md',variable:'mv'}[t]||'mv'}
+
+function buildResults(){
+  const scores=computeScores();
+  const ranked=AREAS.map((a,i)=>({...a,score:scores[i]})).sort((a,b)=>b.score-a.score);
+
+  document.getElementById('results-title').textContent=`${studentData.firstName}, estas son tus áreas más afines`;
+  document.getElementById('results-sub').textContent=`Basado en tus 50 respuestas. Las 3 primeras son las que mejor se alinean con tus intereses y forma de ser.`;
+
+  // Chart
+  const chartEl=document.getElementById('chart-rows');chartEl.innerHTML='';
+  ranked.forEach((area,i)=>{
+    const pct=(area.score/10)*100;
+    const sc=i===0?'var(--accent3)':i===1?'var(--accent4)':i===2?'var(--accent)':'var(--muted)';
+    const fc=i===0?'bar-t1':i===1?'bar-t2':i===2?'bar-t3':'';
+    chartEl.innerHTML+=`<div class="chart-row">
+      <div class="chart-row-header"><span class="chart-area-name">${area.emoji} ${area.name}</span><span class="chart-score" style="color:${sc}">${area.score}/10</span></div>
+      <div class="chart-bar-track"><div class="chart-bar-fill ${fc}" data-pct="${pct}" style="width:0%"></div></div>
+    </div>`;
+  });
+  requestAnimationFrame(()=>setTimeout(()=>{
+    document.querySelectorAll('.chart-bar-fill').forEach(el=>el.style.width=el.dataset.pct+'%');
+  },150));
+
+  // Top 3 cards
+  const topEl=document.getElementById('top-areas-container');topEl.innerHTML='';
+  const rkLabels=['🥇 Tu área principal','🥈 Segunda área afín','🥉 Tercera área afín'];
+  const rkClass=['rk1','rk2','rk3'];
+  ranked.slice(0,3).forEach((area,i)=>{
+    topEl.innerHTML+=`<div class="area-card">
+      <div class="area-card-header">
+        <div class="area-emoji">${area.emoji}</div>
+        <div style="flex:1">
+          <span class="area-rank-badge ${rkClass[i]}">${rkLabels[i]}</span>
+          <div class="area-card-name">${area.name}</div>
+          <div class="area-card-desc">${area.desc}</div>
+          ${area.articulacion?'<div class="articulacion-badge">⭐ Ventaja de Articulación EMTP disponible</div>':''}
+        </div>
+      </div>
+      <div class="area-card-body">
+        <div class="careers-label">Carreras en esta área</div>
+        ${area.careers.map(c=>`<div class="career-item">
+          <div class="career-name">${c.name}</div>
+          <div class="career-desc">${c.desc}</div>
+          <div class="career-meta">
+            <span class="meta-tag mw">🏫 ${c.where}</span>
+            <span class="meta-tag ${mcClass(c.rt)}">📋 ${c.req}</span>
+          </div>
+        </div>`).join('')}
+      </div>
+    </div>`;
+  });
+}
+
+/* ── BUILD PRINT DOC ── */
+function buildPrintDoc(){
+  const scores=computeScores();
+  const ranked=AREAS.map((a,i)=>({...a,score:scores[i]})).sort((a,b)=>b.score-a.score);
+  const top3=ranked.slice(0,3);
+  const reportText=generateReport(ranked);
+
+  const byArea=AREAS.map(()=>[]);
+  QUESTIONS.forEach((q,idx)=>byArea[q.a].push({q:q.t,r:answers[idx]}));
+
+  const rl=r=>r===null?'—':RESP_LABELS[r];
+  const rc=r=>r===0?'r0':r===1?'r1':'r2';
+  const rpt=t=>t==='paes'?'rp':t==='directo'?'rd':'rv';
+  const rpl=t=>t==='paes'?'PAES requerida':t==='directo'?'Ingreso directo':'Variable';
+
+  let respTables='';
+  AREAS.forEach((area,ai)=>{
+    const qs=byArea[ai];
+    respTables+=`<div class="pd-area-block">
+      <div class="pd-area-hd">
+        <span class="pd-area-hd-name">${area.emoji} ${area.name}</span>
+        <span class="pd-area-hd-score">Puntaje: ${scores[ai]}/10</span>
+      </div>
+      <table class="pd-qt">
+        <thead><tr><th style="width:26px">N°</th><th>Pregunta</th><th style="width:135px">Respuesta</th></tr></thead>
+        <tbody>${qs.map((item,qi)=>`<tr><td style="text-align:center">${qi+1}</td><td>${item.q}</td><td class="${rc(item.r)}">${rl(item.r)}</td></tr>`).join('')}</tbody>
+      </table>
+    </div>`;
+  });
+
+  const rkL=['1° — Área principal','2° — Área afín','3° — Área afín'];
+  const scoreSummary=`<table class="pd-st">
+    <thead><tr><th>Área</th><th style="width:55px;text-align:center">Puntaje</th><th style="width:120px">Perfil</th><th style="width:100px">Posición</th></tr></thead>
+    <tbody>${ranked.map((area,i)=>`<tr class="${i<3?'top':''}">
+      <td>${area.emoji} ${area.name}</td>
+      <td style="text-align:center;font-weight:700">${area.score}/10</td>
+      <td><div class="pd-bar-out"><div class="pd-bar-in" style="width:${(area.score/10)*100}%"></div></div></td>
+      <td>${i<3?rkL[i]:''}</td>
+    </tr>`).join('')}</tbody>
+  </table>`;
+
+  const top3HTML=top3.map((area,i)=>`<div class="pd-top">
+    <div class="pd-top-hd">
+      <div class="pd-top-title">${['1°','2°','3°'][i]} ${area.emoji} ${area.name} — Puntaje: ${area.score}/10</div>
+      <div class="pd-top-desc">${area.desc}</div>
+    </div>
+    <div class="pd-top-body">${area.careers.map(c=>`<div class="pd-career">
+      <div class="pd-cn">${c.name}</div>
+      <div class="pd-cd">${c.desc}</div>
+      <div class="pd-cm"><span>🏫 ${c.where} &nbsp;|&nbsp;</span><span class="pd-career-req ${rpt(c.rt)}">${rpl(c.rt)} — ${c.req}</span></div>
+    </div>`).join('')}</div>
+  </div>`).join('');
+
+  document.getElementById('pd-content').innerHTML=`
+    <div class="pd-header">
+      <svg width="52" height="52" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" style="margin-bottom:8px">
+        <circle cx="50" cy="50" r="49" fill="#e8971e"/>
+        <circle cx="50" cy="50" r="44" fill="#2d5f80"/>
+        <text x="50" y="53" text-anchor="middle" fill="white" font-family="'Open Sans', Arial, sans-serif" font-weight="800" font-size="22" letter-spacing="-0.5">TOPIE</text>
+        <text x="50" y="65" text-anchor="middle" fill="#e8971e" font-family="'Open Sans', Arial, sans-serif" font-weight="700" font-size="7.5" letter-spacing="2">RECURSOS PIE</text>
+      </svg>
+      <h1>Registro de Evaluación Vocacional</h1>
+      <p>Instrumento de Orientación Vocacional — Contexto PIE / EMTP &nbsp;·&nbsp; Liceo Técnico Profesional</p>
+    </div>
+
+    <div class="pd-stitle">Antecedentes del estudiante</div>
+    <div class="pd-info-grid">
+      <div class="pd-info-row"><span class="pd-il">Nombre: </span><span class="pd-iv">${studentData.nombre}</span></div>
+      <div class="pd-info-row"><span class="pd-il">RUT: </span><span class="pd-iv">${studentData.rut}</span></div>
+      <div class="pd-info-row"><span class="pd-il">Curso: </span><span class="pd-iv">${studentData.curso}</span></div>
+      <div class="pd-info-row"><span class="pd-il">Especialidad: </span><span class="pd-iv">${studentData.esp}</span></div>
+      <div class="pd-info-row"><span class="pd-il">Fecha de evaluación: </span><span class="pd-iv">${studentData.fecha}</span></div>
+    </div>
+
+    <div class="pd-stitle">Profesional aplicador</div>
+    <div class="pd-prof">
+      <div class="pd-prof-name">${studentData.profNombre}</div>
+      <div class="pd-prof-det">${studentData.profProfesion} &nbsp;·&nbsp; Registro Superintendencia de Salud N° ${studentData.profRegistro}</div>
+    </div>
+
+    <div class="pd-stitle">Síntesis de orientación vocacional</div>
+    <div class="pd-synthesis"><p>${reportText}</p></div>
+
+    <div class="pd-stitle">Registro de respuestas (50 ítems)</div>
+    <p style="font-size:8pt;color:#555;margin-bottom:8px">
+      Escala: <span class="r0">No me llama la atención (0 pts)</span> &nbsp;|&nbsp;
+      <span class="r1">Me da lo mismo (1 pt)</span> &nbsp;|&nbsp;
+      <span class="r2">Me interesa mucho (2 pts)</span>
+    </p>
+    ${respTables}
+
+    <div class="pd-stitle" style="margin-top:16px">Perfil de intereses vocacionales — Resumen de puntajes</div>
+    ${scoreSummary}
+
+    <div class="pd-stitle" style="margin-top:16px">Áreas con mayor afinidad — Carreras y requisitos de ingreso</div>
+    ${top3HTML}
+
+    <div class="pd-stitle">Observaciones del profesional</div>
+    <div>${Array(6).fill('<div class="pd-obs-line"></div>').join('')}</div>
+
+    <div class="pd-sig-wrap">
+      <div class="pd-sig-block">
+        <div class="pd-sig-line"></div>
+        <div class="pd-sig-name">${studentData.profNombre}</div>
+        <div class="pd-sig-det">${studentData.profProfesion} &nbsp;·&nbsp; Reg. N° ${studentData.profRegistro}</div>
+        <div class="pd-sig-date">Fecha: ${studentData.fecha}</div>
+      </div>
+    </div>
+  `;
+}
+
+/* ── EVENTS ── */
+document.getElementById('btn-start').addEventListener('click',()=>{
+  setupForm();showScreen('screen-datos');
+});
+document.getElementById('btn-go-quiz').addEventListener('click',()=>{
+  const data=getFormData();if(!data)return;
+  studentData=data;
+  answers=new Array(QUESTIONS.length).fill(null);
+  document.getElementById('progress-bar-wrap').style.display='block';
+  buildQuiz();showScreen('screen-quiz');updateProgress();
+});
+document.getElementById('btn-submit').addEventListener('click',()=>{
+  if(answers.some(a=>a===null))return;
+  buildResults();buildPrintDoc();
+  document.getElementById('progress-bar-wrap').style.display='none';
+  showScreen('screen-results');
+});
+document.getElementById('btn-print').addEventListener('click',()=>window.print());
+document.getElementById('btn-restart').addEventListener('click',()=>{
+  answers=new Array(QUESTIONS.length).fill(null);studentData={};
+  document.getElementById('progress-bar-wrap').style.display='none';
+  showScreen('screen-intro');
+});
+</script>
+</body>
+</html>
