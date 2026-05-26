@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Test Vocacional PIE — ¿Qué sigue después del liceo?</title>
+<title>Test Vocacional — ¿Qué sigue después del liceo?</title>
 <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@700;800&family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 /* ════════════════════════════════════════
@@ -226,15 +226,7 @@ body{
 }
 .btn-secondary:hover{color:var(--text);border-color:#3a3a50}
 
-.btn-print{
-  display:inline-flex;align-items:center;gap:8px;
-  background:rgba(249,200,70,.08);color:var(--accent4);
-  font-family:'Syne',sans-serif;font-size:14px;font-weight:700;
-  padding:13px 26px;border-radius:var(--radius-sm);
-  border:1.5px solid rgba(249,200,70,.4);
-  cursor:pointer;transition:all .2s;
-}
-.btn-print:hover{background:rgba(249,200,70,.14)}
+/* btn-print removed in student version */
 
 /* ════════════════════════════════════════
    SCREEN: DATOS
@@ -532,16 +524,16 @@ body{
   <div class="container">
     <div style="padding-top:48px"></div>
     <h2 class="form-title anim">Antes de comenzar</h2>
-    <p class="form-subtitle anim d1">Completa tus datos para personalizar los resultados y generar el registro de evaluación PIE.</p>
+    <p class="form-subtitle anim d1">Ingresa tu nombre y curso para personalizar tus resultados.</p>
 
-    <div class="form-section-label">Datos del estudiante</div>
+    <div class="form-section-label">Tus datos</div>
     <div class="form-group anim d1" style="margin-bottom:16px">
-      <label class="form-label" for="inp-nombre">Nombre completo</label>
-      <input class="form-input" id="inp-nombre" type="text" placeholder="Ej: Jaime Muñoz Contreras" autocomplete="name">
+      <label class="form-label" for="inp-nombre">Tu nombre</label>
+      <input class="form-input" id="inp-nombre" type="text" placeholder="Ej: Jaime Muñoz" autocomplete="given-name">
       <span class="form-hint" id="hint-nombre"></span>
     </div>
 
-    <div class="form-grid anim d2">
+    <div class="form-grid anim d2" style="margin-bottom:32px">
       <div class="form-group">
         <label class="form-label" for="inp-curso">Curso</label>
         <select class="form-select" id="inp-curso">
@@ -559,36 +551,7 @@ body{
         </select>
       </div>
     </div>
-
-    <div class="form-grid anim d3">
-      <div class="form-group">
-        <label class="form-label" for="inp-rut">RUT</label>
-        <input class="form-input" id="inp-rut" type="text" placeholder="12.345.678-9" maxlength="12" inputmode="numeric">
-        <span class="form-hint" id="hint-rut">Formato: nn.nnn.nnn-n</span>
-      </div>
-      <div class="form-group">
-        <label class="form-label" for="inp-fecha">Fecha de evaluación</label>
-        <input class="form-input" id="inp-fecha" type="text" placeholder="dd-mm-aaaa" maxlength="10" inputmode="numeric">
-        <span class="form-hint" id="hint-fecha">Formato: dd-mm-aaaa</span>
-      </div>
-    </div>
-
-    <div class="form-section-label" style="margin-top:28px">Profesional aplicador</div>
-    <div class="form-group anim d4" style="margin-bottom:16px">
-      <label class="form-label" for="inp-prof-nombre">Nombre completo del profesional</label>
-      <input class="form-input" id="inp-prof-nombre" type="text" placeholder="Ingrese nombre del profesional">
-    </div>
-    <div class="form-grid anim d4">
-      <div class="form-group">
-        <label class="form-label" for="inp-prof-profesion">Profesión</label>
-        <input class="form-input" id="inp-prof-profesion" type="text" placeholder="Ej: Terapeuta Ocupacional">
-      </div>
-      <div class="form-group">
-        <label class="form-label" for="inp-prof-registro">N° Registro Sup. de Salud</label>
-        <input class="form-input" id="inp-prof-registro" type="text" placeholder="Ej: 123456" inputmode="numeric">
-      </div>
-    </div>
-    <div style="margin-top:32px" class="anim d5">
+    <div style="margin-top:32px" class="anim d3">
       <button class="btn-primary" id="btn-go-quiz">
         Iniciar test
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8H13M13 8L9 4M13 8L9 12" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -640,24 +603,17 @@ body{
     </div>
 
     <div class="results-footer anim">
-      <button class="btn-print" id="btn-print">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
-        Imprimir / Guardar PDF (Registro PIE)
-      </button>
       <button class="btn-secondary" id="btn-restart">
         <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M2 8C2 4.69 4.69 2 8 2C10.06 2 11.86 3.04 12.93 4.63M14 8C14 11.31 11.31 14 8 14C5.94 14 4.14 12.96 3.07 11.37" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M13 2V5H10M3 14V11H6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        Nuevo test
+        Hacer el test de nuevo
       </button>
-      <p class="print-hint">💡 En el diálogo de impresión, desactiva <strong>"Encabezados y pies de página"</strong> (o "Headers and footers") para omitir la fecha y URL del navegador en el documento.</p>
     </div>
     <div style="padding-bottom:80px"></div>
   </div>
 </div>
 
-<!-- ══════════ PRINT DOCUMENT ══════════ -->
-<div id="print-doc">
-  <div id="pd-content"></div>
-</div>
+
+
 
 <script>
 /* ══════════════════════════════════════════
@@ -884,47 +840,20 @@ function updateProgress(){
 
 /* ── FORM ── */
 function setupForm(){
-  document.getElementById('inp-fecha').value=autoDate();
-  const rutEl=document.getElementById('inp-rut');
-  rutEl.addEventListener('input',function(){
-    this.value=formatRUT(this.value);
-    const hEl=document.getElementById('hint-rut');
-    if(this.value.length>3){
-      if(validateRUT(this.value)){this.classList.remove('error');this.classList.add('valid');hEl.textContent='RUT válido ✓';hEl.className='form-hint ok'}
-      else{this.classList.remove('valid');this.classList.add('error');hEl.textContent='RUT inválido — revisa los dígitos';hEl.className='form-hint err'}
-    }else{this.classList.remove('valid','error');hEl.textContent='Formato: nn.nnn.nnn-n';hEl.className='form-hint'}
-  });
-  const fechaEl=document.getElementById('inp-fecha');
-  fechaEl.addEventListener('input',function(){
-    const hEl=document.getElementById('hint-fecha');
-    if(this.value.length>=10){
-      if(validateDate(this.value)){this.classList.remove('error');this.classList.add('valid');hEl.textContent='Fecha válida ✓';hEl.className='form-hint ok'}
-      else{this.classList.remove('valid');this.classList.add('error');hEl.textContent='Fecha inválida';hEl.className='form-hint err'}
-    }else{this.classList.remove('valid','error');hEl.textContent='Formato: dd-mm-aaaa';hEl.className='form-hint'}
-  });
+  // nothing to pre-fill in student version
 }
 
 function getFormData(){
   const nombre=document.getElementById('inp-nombre').value.trim();
   const curso=document.getElementById('inp-curso').value;
   const esp=document.getElementById('inp-especialidad').value;
-  const rut=document.getElementById('inp-rut').value.trim();
-  const fecha=document.getElementById('inp-fecha').value.trim();
-  const profNombre=document.getElementById('inp-prof-nombre').value.trim();
-  const profProfesion=document.getElementById('inp-prof-profesion').value.trim();
-  const profRegistro=document.getElementById('inp-prof-registro').value.trim();
   const errs=[];
   if(!nombre)errs.push('inp-nombre');
   if(!curso)errs.push('inp-curso');
   if(!esp)errs.push('inp-especialidad');
-  if(!validateRUT(rut))errs.push('inp-rut');
-  if(!validateDate(fecha))errs.push('inp-fecha');
-  if(!profNombre)errs.push('inp-prof-nombre');
-  if(!profProfesion)errs.push('inp-prof-profesion');
-  if(!profRegistro)errs.push('inp-prof-registro');
   errs.forEach(id=>{const el=document.getElementById(id);el.classList.add('error');setTimeout(()=>el.classList.remove('error'),2000)});
   if(errs.length)return null;
-  return{nombre,curso,esp,rut,fecha,firstName:nombre.trim().split(/\s+/)[0],profNombre,profProfesion,profRegistro};
+  return{nombre,curso,esp,rut:'',fecha:autoDate(),firstName:nombre.trim().split(/\s+/)[0],profNombre:'',profProfesion:'',profRegistro:''};
 }
 
 /* ── BUILD QUIZ ── */
@@ -986,7 +915,7 @@ function buildResults(){
   const ranked=AREAS.map((a,i)=>({...a,score:scores[i]})).sort((a,b)=>b.score-a.score);
 
   document.getElementById('results-title').textContent=`${studentData.firstName}, estas son tus áreas más afines`;
-  document.getElementById('results-sub').textContent=`Basado en tus 50 respuestas. Las 3 primeras son las que mejor se alinean con tus intereses y forma de ser.`;
+  document.getElementById('results-sub').textContent=`Basado en tus 50 respuestas. Las 3 primeras son las que mejor se alinean con tus intereses.`;
 
   // Chart
   const chartEl=document.getElementById('chart-rows');chartEl.innerHTML='';
@@ -1157,11 +1086,10 @@ document.getElementById('btn-go-quiz').addEventListener('click',()=>{
 });
 document.getElementById('btn-submit').addEventListener('click',()=>{
   if(answers.some(a=>a===null))return;
-  buildResults();buildPrintDoc();
+  buildResults();
   document.getElementById('progress-bar-wrap').style.display='none';
   showScreen('screen-results');
 });
-document.getElementById('btn-print').addEventListener('click',()=>window.print());
 document.getElementById('btn-restart').addEventListener('click',()=>{
   answers=new Array(QUESTIONS.length).fill(null);studentData={};
   document.getElementById('progress-bar-wrap').style.display='none';
